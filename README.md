@@ -1,58 +1,60 @@
 # AI-Powered Placement Intelligence System
 
-An upgraded placement dashboard for PSNA students and placement cell staff. The system combines eligibility checks, chart-based analytics, AI-style resume matching, and live company management in one full-stack application.
+A full-stack placement SaaS prototype for students and placement teams. It combines analytics, AI-style resume scoring, rate-limited APIs, pagination, dark mode, and optional Redis/BullMQ infrastructure in a single deployable app.
 
-## Features
+## Highlights
 
-- Smart dashboard with branch-wise placement percentage and company-wise hiring charts
-- Student eligibility checker with saved submissions for analytics
-- Resume-to-job matching with score-based recommendations
-- Company management with create, edit, delete, search, filtering, and pagination
-- File-backed persistence for company data and saved student checks
-- Cache-friendly backend structure for faster repeated reads
+- Smart dashboard:
+  - placement percentage by branch
+  - top hiring companies
+  - average salary trend
+  - selected vs rejected ratio
+- AI feature:
+  - resume to job matching score
+  - top 5 job recommendations
+- System design upgrades:
+  - API rate limiting with `express-rate-limit`
+  - optional Redis-backed caching
+  - optional BullMQ resume-analysis queue
+  - pagination and filtering for company listings
+- UI/UX upgrades:
+  - dark mode toggle
+  - loading skeletons
+  - polished empty states
+  - SaaS-style dashboard layout
 
 ## Tech Stack
 
 - HTML
 - CSS
 - JavaScript
-- Chart.js
 - Node.js
 - Express
+- express-rate-limit
+- ioredis
+- BullMQ
 
-## Project Structure
+## Optional Infra
 
-```bash
-placement-site/
-|-- data/
-|   |-- companies.json
-|   `-- studentChecks.json
-|-- index.html
-|-- style.css
-|-- script.js
-|-- server.js
-|-- package.json
-`-- README.md
-```
+If `REDIS_URL` is configured, the app switches from local memory mode to:
 
-## Core Flows
+- Redis cache for repeated reads
+- BullMQ queue for resume matching jobs
 
-1. Students submit academic details to check eligibility.
-2. Each saved check updates branch and company analytics.
-3. Resume text is matched against role and skill metadata.
-4. Placement cell staff manage hiring rules from the admin panel.
+Without `REDIS_URL`, the app still works in local fallback mode.
 
-## API Endpoints
+## Main Endpoints
 
-- `GET /api/companies` - paginated and filterable company list
-- `POST /api/companies` - add a company
-- `PUT /api/companies/:id` - update a company
-- `DELETE /api/companies/:id` - delete a company
-- `GET /api/analytics` - dashboard analytics
-- `POST /api/eligibility/check` - run and save an eligibility check
-- `POST /api/resume/match` - generate AI-style recommendations
+- `GET /api/system/meta`
+- `GET /api/companies`
+- `POST /api/companies`
+- `PUT /api/companies/:id`
+- `DELETE /api/companies/:id`
+- `GET /api/analytics`
+- `POST /api/eligibility/check`
+- `POST /api/resume/match`
 
-## Run Locally
+## Run
 
 ```bash
 npm install

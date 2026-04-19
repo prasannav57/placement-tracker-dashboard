@@ -11,10 +11,10 @@
     <header class="hero">
       <div class="hero-copy">
         <p class="eyebrow">AI-Powered Placement Intelligence System</p>
-        <h1>Track hiring trends, score resume fit, and manage placement rules from one smart dashboard.</h1>
+        <h1>Placement intelligence, AI matching, and ops-grade backend features in one deployable platform.</h1>
         <p class="hero-text">
-          Built for students and placement cell teams, this dashboard combines eligibility checks, analytics, AI-style job matching,
-          and operational company management in a single live system.
+          This upgrade turns the project into a decision-support system with analytics, recommendations, queue-ready processing,
+          rate-limited APIs, and a SaaS-style interface for students and placement teams.
         </p>
       </div>
       <div class="hero-stats" aria-label="Placement highlights">
@@ -23,13 +23,16 @@
           <strong id="companyCount">0</strong>
         </div>
         <div class="stat-card">
-          <span class="stat-label">Branches covered</span>
-          <strong id="branchCount">0</strong>
-        </div>
-        <div class="stat-card">
           <span class="stat-label">Checks saved</span>
           <strong id="checkCount">0</strong>
         </div>
+        <div class="stat-card">
+          <span class="stat-label">Queue mode</span>
+          <strong id="queueMode">Local</strong>
+        </div>
+      </div>
+      <div class="hero-controls">
+        <button type="button" class="btn btn-secondary" id="themeToggle">Switch to dark mode</button>
       </div>
     </header>
 
@@ -38,9 +41,9 @@
         <div class="panel-heading">
           <div>
             <p class="section-tag">Smart dashboard</p>
-            <h2 id="analyticsTitle">Placement insights and hiring trends</h2>
+            <h2 id="analyticsTitle">Hiring analytics and decision signals</h2>
           </div>
-          <p class="panel-intro">Saved student checks feed branch-wise placement rates and company-wise hiring demand analytics.</p>
+          <p class="panel-intro">Track branch placement trends, salary patterns, hiring concentration, and outcome ratios from saved student activity.</p>
         </div>
 
         <div class="analytics-metrics">
@@ -53,13 +56,24 @@
             <strong id="topCompany">-</strong>
           </article>
           <article class="insight-card">
-            <span class="stat-label">AI recommendations generated</span>
-            <strong id="recommendationCount">0</strong>
+            <span class="stat-label">Average salary offer</span>
+            <strong id="avgSalary">0 LPA</strong>
+          </article>
+          <article class="insight-card">
+            <span class="stat-label">Selected vs rejected</span>
+            <strong id="selectionRatio">0 : 0</strong>
           </article>
         </div>
 
         <div id="analyticsFeedback" class="status-message" aria-live="polite"></div>
-        <div class="chart-grid">
+        <div id="analyticsSkeleton" class="skeleton-grid" hidden>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+
+        <div class="chart-grid chart-grid-large">
           <article class="chart-card">
             <div class="chart-heading">
               <h3>Placement % by branch</h3>
@@ -70,9 +84,23 @@
           <article class="chart-card">
             <div class="chart-heading">
               <h3>Company-wise hiring stats</h3>
-              <p>Counts how often students were eligible for each company.</p>
+              <p>Shows how often students matched each company.</p>
             </div>
             <canvas id="companyChart" aria-label="Company wise hiring stats"></canvas>
+          </article>
+          <article class="chart-card">
+            <div class="chart-heading">
+              <h3>Average salary by company</h3>
+              <p>Offered package trend across tracked roles.</p>
+            </div>
+            <canvas id="salaryChart" aria-label="Average salary by company"></canvas>
+          </article>
+          <article class="chart-card">
+            <div class="chart-heading">
+              <h3>Selected vs rejected ratio</h3>
+              <p>Outcome tracking from saved student checks.</p>
+            </div>
+            <canvas id="outcomeChart" aria-label="Selection outcome ratio"></canvas>
           </article>
         </div>
       </section>
@@ -81,9 +109,9 @@
         <div class="panel-heading">
           <div>
             <p class="section-tag">Student checker</p>
-            <h2 id="studentCheckerTitle">Find eligible companies</h2>
+            <h2 id="studentCheckerTitle">Eligibility and outcome tracking</h2>
           </div>
-          <p class="panel-intro">Every eligibility run is stored so the dashboard can learn from student demand and outcomes.</p>
+          <p class="panel-intro">Every check becomes analytics input, including placement outcome status for selection funnels.</p>
         </div>
 
         <form id="eligibilityForm" class="form-grid">
@@ -118,6 +146,15 @@
             <span>Current arrears</span>
             <input type="number" id="arrears" min="0" step="1" placeholder="0" required>
           </label>
+          <label class="field">
+            <span>Placement status</span>
+            <select id="placementStatus" required>
+              <option value="">Select status</option>
+              <option value="PENDING">Pending</option>
+              <option value="SELECTED">Selected</option>
+              <option value="REJECTED">Rejected</option>
+            </select>
+          </label>
           <div class="form-actions">
             <button type="submit" class="btn btn-primary">Check eligibility</button>
             <button type="button" id="resetEligibility" class="btn btn-secondary">Reset</button>
@@ -125,6 +162,10 @@
         </form>
 
         <div id="eligibilityMessage" class="status-message" aria-live="polite"></div>
+        <div id="eligibilitySkeleton" class="skeleton-list" hidden>
+          <div class="skeleton-card tall"></div>
+          <div class="skeleton-card tall"></div>
+        </div>
         <div id="eligibilityResults" class="result-list" aria-live="polite"></div>
       </section>
 
@@ -134,7 +175,7 @@
             <p class="section-tag">AI feature</p>
             <h2 id="resumeMatchTitle">Resume to job matching</h2>
           </div>
-          <p class="panel-intro">Paste a resume summary or skill list to get score-based company recommendations.</p>
+          <p class="panel-intro">Resume analysis can run locally or through a BullMQ queue when Redis is configured.</p>
         </div>
 
         <form id="resumeForm" class="form-grid">
@@ -168,6 +209,10 @@
         </form>
 
         <div id="resumeFeedback" class="status-message" aria-live="polite"></div>
+        <div id="resumeSkeleton" class="skeleton-list" hidden>
+          <div class="skeleton-card tall"></div>
+          <div class="skeleton-card tall"></div>
+        </div>
         <div id="resumeResults" class="result-list" aria-live="polite"></div>
       </section>
 
@@ -175,15 +220,15 @@
         <div class="panel-heading">
           <div>
             <p class="section-tag">Company intelligence</p>
-            <h2 id="companyListTitle">Search and browse hiring criteria</h2>
+            <h2 id="companyListTitle">Search, filter, and browse company rules</h2>
           </div>
-          <p class="panel-intro">Use live search, branch filters, and pagination to manage larger company lists cleanly.</p>
+          <p class="panel-intro">Large lists stay manageable with filtering, pagination, skill-aware cards, and clean empty states.</p>
         </div>
 
         <div class="toolbar">
           <label class="field">
             <span>Search company / role</span>
-            <input type="text" id="companySearch" placeholder="Search by company or role">
+            <input type="text" id="companySearch" placeholder="Search by company, role, or skill">
           </label>
           <label class="field">
             <span>Filter branch</span>
@@ -199,9 +244,14 @@
         </div>
 
         <div id="companyFeedback" class="status-message" aria-live="polite"></div>
+        <div id="companySkeleton" class="skeleton-grid" hidden>
+          <div class="skeleton-card tall"></div>
+          <div class="skeleton-card tall"></div>
+          <div class="skeleton-card tall"></div>
+        </div>
         <div id="companyEmptyState" class="empty-state" hidden>
           <h3>No companies available</h3>
-          <p>Add a company in the management section to get started.</p>
+          <p>Try changing the filters or add a company in the management section.</p>
         </div>
         <div id="companies" class="company-grid"></div>
         <div class="pagination">
@@ -217,7 +267,7 @@
             <p class="section-tag">Placement cell management</p>
             <h2 id="adminPanelTitle">Add or update company rules</h2>
           </div>
-          <p class="panel-intro">Save role metadata and skills so AI recommendations can match students more intelligently.</p>
+          <p class="panel-intro">Company salary and skills power both dashboard metrics and AI recommendations.</p>
         </div>
 
         <form id="companyForm" class="form-grid">
@@ -250,6 +300,10 @@
             <input type="number" id="companyArrears" min="0" step="1" placeholder="0" required>
           </label>
           <label class="field">
+            <span>Salary package (LPA)</span>
+            <input type="number" id="companySalary" min="0" step="0.1" placeholder="4.5" required>
+          </label>
+          <label class="field field-full">
             <span>Preferred skills</span>
             <input type="text" id="companySkills" placeholder="JavaScript, Node.js, SQL, Problem Solving">
           </label>

@@ -6,6 +6,7 @@
     "minCgpa": 7,
     "branch": "CSE",
     "maxArrears": 0,
+    "salaryLpa": 4.2,
     "skills": [
       "Java",
       "SQL",
@@ -19,6 +20,7 @@
     "minCgpa": 7.5,
     "branch": "IT",
     "maxArrears": 0,
+    "salaryLpa": 5,
     "skills": [
       "JavaScript",
       "Communication",
@@ -32,10 +34,27 @@
     "minCgpa": 6.5,
     "branch": "CSE",
     "maxArrears": 0,
+    "salaryLpa": 4.8,
     "skills": [
       "Node.js",
       "APIs",
       "Debugging"
+    ]
+  },
+  {
+    "id": "cmp_1776586718831",
+    "name": "IBM",
+    "role": "DEVELOPER",
+    "minCgpa": 8,
+    "branch": "CSE",
+    "maxArrears": 0,
+    "salaryLpa": 8.4,
+    "skills": [
+      "JAVA",
+      "C",
+      "C++",
+      "FRONTEND",
+      "BACKEND"
     ]
   }
 ]
