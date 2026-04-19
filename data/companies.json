@@ -5,15 +5,25 @@
     "role": "Developer",
     "minCgpa": 7,
     "branch": "CSE",
-    "maxArrears": 0
+    "maxArrears": 0,
+    "skills": [
+      "Java",
+      "SQL",
+      "Problem Solving"
+    ]
   },
   {
     "id": "cmp_infosys",
     "name": "Infosys",
     "role": "Systems Engineer",
-    "minCgpa": 6,
+    "minCgpa": 7.5,
     "branch": "IT",
-    "maxArrears": 1
+    "maxArrears": 0,
+    "skills": [
+      "JavaScript",
+      "Communication",
+      "SQL"
+    ]
   },
   {
     "id": "cmp_wipro",
@@ -21,6 +31,11 @@
     "role": "Project Engineer",
     "minCgpa": 6.5,
     "branch": "CSE",
-    "maxArrears": 0
+    "maxArrears": 0,
+    "skills": [
+      "Node.js",
+      "APIs",
+      "Debugging"
+    ]
   }
 ]

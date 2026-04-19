@@ -1,0 +1,162 @@
+[
+  {
+    "id": "check_1776583432196",
+    "createdAt": "2026-04-19T07:23:52.196Z",
+    "student": {
+      "name": "PRASANNA V",
+      "registerNumber": "2403921310421160",
+      "resumeLink": "https://drive.google.com/file/d/1r2sOzkGRxB9R7NlFCf3KOTWMSFjIy5ZE/view?usp=sharing",
+      "cgpa": 7.75,
+      "branch": "CSE",
+      "arrears": 0
+    },
+    "results": [
+      {
+        "company": {
+          "id": "cmp_tcs",
+          "name": "TCS",
+          "role": "Developer",
+          "minCgpa": 7,
+          "branch": "CSE",
+          "maxArrears": 0,
+          "skills": [
+            "Java",
+            "SQL",
+            "Problem Solving"
+          ]
+        },
+        "eligible": true,
+        "score": 83,
+        "reasons": [
+          "Meets CGPA requirement of 7.00.",
+          "Matches preferred branch CSE.",
+          "Within arrears limit (0).",
+          "Add more role-relevant skills in the resume summary for a stronger match."
+        ],
+        "matchedSkills": []
+      },
+      {
+        "company": {
+          "id": "cmp_wipro",
+          "name": "Wipro",
+          "role": "Project Engineer",
+          "minCgpa": 6.5,
+          "branch": "CSE",
+          "maxArrears": 0,
+          "skills": [
+            "Node.js",
+            "APIs",
+            "Debugging"
+          ]
+        },
+        "eligible": true,
+        "score": 83,
+        "reasons": [
+          "Meets CGPA requirement of 6.50.",
+          "Matches preferred branch CSE.",
+          "Within arrears limit (0).",
+          "Add more role-relevant skills in the resume summary for a stronger match."
+        ],
+        "matchedSkills": []
+      },
+      {
+        "company": {
+          "id": "cmp_infosys",
+          "name": "Infosys",
+          "role": "Systems Engineer",
+          "minCgpa": 6,
+          "branch": "IT",
+          "maxArrears": 1,
+          "skills": [
+            "JavaScript",
+            "Communication",
+            "SQL"
+          ]
+        },
+        "eligible": false,
+        "score": 53,
+        "reasons": [
+          "Meets CGPA requirement of 6.00.",
+          "Preferred branch is IT.",
+          "Within arrears limit (1).",
+          "Add more role-relevant skills in the resume summary for a stronger match."
+        ],
+        "matchedSkills": []
+      }
+    ],
+    "recommendations": [
+      {
+        "company": {
+          "id": "cmp_tcs",
+          "name": "TCS",
+          "role": "Developer",
+          "minCgpa": 7,
+          "branch": "CSE",
+          "maxArrears": 0,
+          "skills": [
+            "Java",
+            "SQL",
+            "Problem Solving"
+          ]
+        },
+        "eligible": true,
+        "score": 83,
+        "reasons": [
+          "Meets CGPA requirement of 7.00.",
+          "Matches preferred branch CSE.",
+          "Within arrears limit (0).",
+          "Add more role-relevant skills in the resume summary for a stronger match."
+        ],
+        "matchedSkills": []
+      },
+      {
+        "company": {
+          "id": "cmp_wipro",
+          "name": "Wipro",
+          "role": "Project Engineer",
+          "minCgpa": 6.5,
+          "branch": "CSE",
+          "maxArrears": 0,
+          "skills": [
+            "Node.js",
+            "APIs",
+            "Debugging"
+          ]
+        },
+        "eligible": true,
+        "score": 83,
+        "reasons": [
+          "Meets CGPA requirement of 6.50.",
+          "Matches preferred branch CSE.",
+          "Within arrears limit (0).",
+          "Add more role-relevant skills in the resume summary for a stronger match."
+        ],
+        "matchedSkills": []
+      },
+      {
+        "company": {
+          "id": "cmp_infosys",
+          "name": "Infosys",
+          "role": "Systems Engineer",
+          "minCgpa": 6,
+          "branch": "IT",
+          "maxArrears": 1,
+          "skills": [
+            "JavaScript",
+            "Communication",
+            "SQL"
+          ]
+        },
+        "eligible": false,
+        "score": 53,
+        "reasons": [
+          "Meets CGPA requirement of 6.00.",
+          "Preferred branch is IT.",
+          "Within arrears limit (1).",
+          "Add more role-relevant skills in the resume summary for a stronger match."
+        ],
+        "matchedSkills": []
+      }
+    ]
+  }
+]

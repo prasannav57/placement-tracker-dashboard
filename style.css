@@ -30,19 +30,24 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
+a {
+  color: var(--accent-strong);
+}
+
 .page-shell {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1240px, calc(100% - 32px));
   margin: 0 auto;
   padding: 32px 0 48px;
 }
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
   gap: 24px;
   align-items: stretch;
   margin-bottom: 28px;
@@ -74,8 +79,8 @@ select {
 
 .hero h1 {
   margin: 0 0 16px;
-  font-size: clamp(2.2rem, 4vw, 4.2rem);
-  line-height: 0.96;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 1.02;
 }
 
 .hero-text,
@@ -83,12 +88,14 @@ select {
 .field span,
 .company-meta,
 .status-message,
-.empty-state p {
+.empty-state p,
+.chart-heading p,
+.mini-note {
   color: var(--muted);
 }
 
 .hero-text {
-  max-width: 60ch;
+  max-width: 64ch;
   margin: 0;
   font-size: 1.05rem;
   line-height: 1.7;
@@ -102,7 +109,8 @@ select {
   align-content: center;
 }
 
-.stat-card {
+.stat-card,
+.insight-card {
   padding: 20px;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.65);
@@ -116,8 +124,9 @@ select {
   color: var(--muted);
 }
 
-.stat-card strong {
-  font-size: 2.2rem;
+.stat-card strong,
+.insight-card strong {
+  font-size: 2rem;
 }
 
 .dashboard {
@@ -144,9 +153,40 @@ select {
 }
 
 .panel-intro {
-  max-width: 34ch;
+  max-width: 36ch;
   margin: 0;
   line-height: 1.6;
+}
+
+.analytics-metrics,
+.chart-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.analytics-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 12px;
+}
+
+.chart-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.chart-card {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(74, 56, 38, 0.1);
+  border-radius: 22px;
+  padding: 20px;
+  min-height: 320px;
+}
+
+.chart-heading h3 {
+  margin: 0 0 6px;
+}
+
+.chart-heading p {
+  margin: 0 0 14px;
 }
 
 .form-grid {
@@ -160,13 +200,18 @@ select {
   gap: 8px;
 }
 
+.field-full {
+  grid-column: 1 / -1;
+}
+
 .field span {
   font-size: 0.92rem;
   font-weight: 700;
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
   border: 1px solid rgba(74, 56, 38, 0.18);
   border-radius: 16px;
@@ -175,18 +220,41 @@ select {
   color: var(--text);
 }
 
+textarea {
+  resize: vertical;
+  min-height: 144px;
+}
+
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   outline: 2px solid rgba(15, 118, 110, 0.25);
   border-color: var(--accent);
 }
 
-.form-actions {
-  grid-column: 1 / -1;
+.toolbar {
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 16px;
+}
+
+.form-actions,
+.company-actions,
+.pagination {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.form-actions {
+  grid-column: 1 / -1;
   margin-top: 4px;
+}
+
+.pagination {
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .btn {
@@ -199,6 +267,12 @@ select:focus {
 
 .btn:hover {
   transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .btn-primary {
@@ -214,6 +288,16 @@ select:focus {
 .btn-secondary {
   background: rgba(31, 42, 47, 0.08);
   color: var(--text);
+}
+
+.btn-danger {
+  background: rgba(180, 35, 24, 0.1);
+  color: var(--danger);
+}
+
+.btn-edit {
+  background: rgba(15, 118, 110, 0.1);
+  color: var(--accent-strong);
 }
 
 .status-message {
@@ -238,11 +322,12 @@ select:focus {
 }
 
 .company-grid {
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .result-card,
-.company-card {
+.company-card,
+.recommendation-card {
   border-radius: 22px;
   padding: 20px;
   background: var(--surface-strong);
@@ -259,7 +344,7 @@ select:focus {
 
 .card-topline {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 12px;
@@ -271,7 +356,8 @@ select:focus {
   font-size: 1.25rem;
 }
 
-.badge {
+.badge,
+.skill-pill {
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
@@ -290,6 +376,11 @@ select:focus {
   color: var(--danger);
 }
 
+.skill-pill {
+  background: rgba(217, 119, 6, 0.12);
+  color: var(--warm);
+}
+
 .criteria-list,
 .reason-list {
   margin: 0;
@@ -306,23 +397,22 @@ select:focus {
   line-height: 1.7;
 }
 
-.company-actions {
+.skill-list {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
 }
 
-.company-actions button {
-  padding: 10px 14px;
-}
-
-.btn-danger {
-  background: rgba(180, 35, 24, 0.1);
-  color: var(--danger);
-}
-
-.btn-edit {
-  background: rgba(15, 118, 110, 0.1);
+.score-ring {
+  min-width: 76px;
+  min-height: 76px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(217, 119, 6, 0.12));
+  border: 1px solid rgba(74, 56, 38, 0.12);
+  font-weight: 700;
   color: var(--accent-strong);
 }
 
@@ -338,10 +428,13 @@ select:focus {
   margin: 0 0 8px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .hero,
   .panel-heading,
-  .form-grid {
+  .form-grid,
+  .chart-grid,
+  .analytics-metrics,
+  .toolbar {
     grid-template-columns: 1fr;
   }
 
@@ -350,7 +443,7 @@ select:focus {
   }
 
   .page-shell {
-    width: min(100% - 20px, 1180px);
+    width: min(100% - 20px, 1240px);
     padding-top: 20px;
   }
 
@@ -372,7 +465,8 @@ select:focus {
   }
 
   .form-actions,
-  .company-actions {
+  .company-actions,
+  .pagination {
     flex-direction: column;
   }
 

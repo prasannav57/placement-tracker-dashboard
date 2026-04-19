@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PSNA CSE Placement Tracker</title>
+  <title>AI-Powered Placement Intelligence System</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="page-shell">
     <header class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">PSNA CSE Placement Tracker</p>
-        <h1>Check student eligibility and manage placement criteria in one dashboard.</h1>
+        <p class="eyebrow">AI-Powered Placement Intelligence System</p>
+        <h1>Track hiring trends, score resume fit, and manage placement rules from one smart dashboard.</h1>
         <p class="hero-text">
-          Students can quickly see matching companies, and placement coordinators can keep hiring criteria current without touching code.
+          Built for students and placement cell teams, this dashboard combines eligibility checks, analytics, AI-style job matching,
+          and operational company management in a single live system.
         </p>
       </div>
       <div class="hero-stats" aria-label="Placement highlights">
@@ -25,17 +26,64 @@
           <span class="stat-label">Branches covered</span>
           <strong id="branchCount">0</strong>
         </div>
+        <div class="stat-card">
+          <span class="stat-label">Checks saved</span>
+          <strong id="checkCount">0</strong>
+        </div>
       </div>
     </header>
 
     <main class="dashboard">
+      <section class="panel panel-analytics" aria-labelledby="analyticsTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="section-tag">Smart dashboard</p>
+            <h2 id="analyticsTitle">Placement insights and hiring trends</h2>
+          </div>
+          <p class="panel-intro">Saved student checks feed branch-wise placement rates and company-wise hiring demand analytics.</p>
+        </div>
+
+        <div class="analytics-metrics">
+          <article class="insight-card">
+            <span class="stat-label">Average placement rate</span>
+            <strong id="avgPlacementRate">0%</strong>
+          </article>
+          <article class="insight-card">
+            <span class="stat-label">Top hiring company</span>
+            <strong id="topCompany">-</strong>
+          </article>
+          <article class="insight-card">
+            <span class="stat-label">AI recommendations generated</span>
+            <strong id="recommendationCount">0</strong>
+          </article>
+        </div>
+
+        <div id="analyticsFeedback" class="status-message" aria-live="polite"></div>
+        <div class="chart-grid">
+          <article class="chart-card">
+            <div class="chart-heading">
+              <h3>Placement % by branch</h3>
+              <p>Calculated from saved eligibility checks.</p>
+            </div>
+            <canvas id="branchChart" aria-label="Placement rate by branch"></canvas>
+          </article>
+          <article class="chart-card">
+            <div class="chart-heading">
+              <h3>Company-wise hiring stats</h3>
+              <p>Counts how often students were eligible for each company.</p>
+            </div>
+            <canvas id="companyChart" aria-label="Company wise hiring stats"></canvas>
+          </article>
+        </div>
+      </section>
+
       <section class="panel panel-student" aria-labelledby="studentCheckerTitle">
         <div class="panel-heading">
           <div>
             <p class="section-tag">Student checker</p>
             <h2 id="studentCheckerTitle">Find eligible companies</h2>
           </div>
-          <p class="panel-intro">Enter academic details to see which companies match the current placement rules.</p>
+          <p class="panel-intro">Every eligibility run is stored so the dashboard can learn from student demand and outcomes.</p>
         </div>
 
         <form id="eligibilityForm" class="form-grid">
@@ -80,13 +128,74 @@
         <div id="eligibilityResults" class="result-list" aria-live="polite"></div>
       </section>
 
+      <section class="panel panel-ai" aria-labelledby="resumeMatchTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="section-tag">AI feature</p>
+            <h2 id="resumeMatchTitle">Resume to job matching</h2>
+          </div>
+          <p class="panel-intro">Paste a resume summary or skill list to get score-based company recommendations.</p>
+        </div>
+
+        <form id="resumeForm" class="form-grid">
+          <label class="field field-full">
+            <span>Resume text / skill summary</span>
+            <textarea id="resumeText" rows="6" placeholder="Example: JavaScript, Node.js, React, SQL, communication, APIs, problem solving..." required></textarea>
+          </label>
+          <label class="field">
+            <span>Preferred branch</span>
+            <select id="resumeBranch">
+              <option value="">Use all branches</option>
+              <option value="CSE">CSE</option>
+              <option value="IT">IT</option>
+              <option value="ECE">ECE</option>
+              <option value="EEE">EEE</option>
+              <option value="MECH">MECH</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Current CGPA</span>
+            <input type="number" id="resumeCgpa" min="0" max="10" step="0.01" placeholder="Optional">
+          </label>
+          <label class="field">
+            <span>Current arrears</span>
+            <input type="number" id="resumeArrears" min="0" step="1" placeholder="Optional">
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Analyze resume</button>
+            <button type="button" id="resetResume" class="btn btn-secondary">Clear</button>
+          </div>
+        </form>
+
+        <div id="resumeFeedback" class="status-message" aria-live="polite"></div>
+        <div id="resumeResults" class="result-list" aria-live="polite"></div>
+      </section>
+
       <section class="panel panel-companies" aria-labelledby="companyListTitle">
         <div class="panel-heading">
           <div>
-            <p class="section-tag">Company directory</p>
-            <h2 id="companyListTitle">Current hiring criteria</h2>
+            <p class="section-tag">Company intelligence</p>
+            <h2 id="companyListTitle">Search and browse hiring criteria</h2>
           </div>
-          <p class="panel-intro">This list powers the student checker and updates instantly when admin edits are saved.</p>
+          <p class="panel-intro">Use live search, branch filters, and pagination to manage larger company lists cleanly.</p>
+        </div>
+
+        <div class="toolbar">
+          <label class="field">
+            <span>Search company / role</span>
+            <input type="text" id="companySearch" placeholder="Search by company or role">
+          </label>
+          <label class="field">
+            <span>Filter branch</span>
+            <select id="companyFilterBranch">
+              <option value="">All branches</option>
+              <option value="CSE">CSE</option>
+              <option value="IT">IT</option>
+              <option value="ECE">ECE</option>
+              <option value="EEE">EEE</option>
+              <option value="MECH">MECH</option>
+            </select>
+          </label>
         </div>
 
         <div id="companyFeedback" class="status-message" aria-live="polite"></div>
@@ -95,6 +204,11 @@
           <p>Add a company in the management section to get started.</p>
         </div>
         <div id="companies" class="company-grid"></div>
+        <div class="pagination">
+          <button type="button" class="btn btn-secondary" id="prevPageBtn">Previous</button>
+          <span id="pageLabel">Page 1</span>
+          <button type="button" class="btn btn-secondary" id="nextPageBtn">Next</button>
+        </div>
       </section>
 
       <section class="panel panel-admin" aria-labelledby="adminPanelTitle">
@@ -103,7 +217,7 @@
             <p class="section-tag">Placement cell management</p>
             <h2 id="adminPanelTitle">Add or update company rules</h2>
           </div>
-          <p class="panel-intro">Maintain company criteria through the UI. Changes are saved to the backend data store.</p>
+          <p class="panel-intro">Save role metadata and skills so AI recommendations can match students more intelligently.</p>
         </div>
 
         <form id="companyForm" class="form-grid">
@@ -134,6 +248,10 @@
           <label class="field">
             <span>Maximum arrears allowed</span>
             <input type="number" id="companyArrears" min="0" step="1" placeholder="0" required>
+          </label>
+          <label class="field">
+            <span>Preferred skills</span>
+            <input type="text" id="companySkills" placeholder="JavaScript, Node.js, SQL, Problem Solving">
           </label>
           <div class="form-actions">
             <button type="submit" class="btn btn-primary" id="saveCompanyBtn">Save company</button>
