@@ -1,0 +1,26 @@
+[
+  {
+    "id": "cmp_tcs",
+    "name": "TCS",
+    "role": "Developer",
+    "minCgpa": 7,
+    "branch": "CSE",
+    "maxArrears": 0
+  },
+  {
+    "id": "cmp_infosys",
+    "name": "Infosys",
+    "role": "Systems Engineer",
+    "minCgpa": 6,
+    "branch": "IT",
+    "maxArrears": 1
+  },
+  {
+    "id": "cmp_wipro",
+    "name": "Wipro",
+    "role": "Project Engineer",
+    "minCgpa": 6.5,
+    "branch": "CSE",
+    "maxArrears": 0
+  }
+]

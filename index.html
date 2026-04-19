@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PSNA CSE Placement Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">PSNA CSE Placement Tracker</p>
+        <h1>Check student eligibility and manage placement criteria in one dashboard.</h1>
+        <p class="hero-text">
+          Students can quickly see matching companies, and placement coordinators can keep hiring criteria current without touching code.
+        </p>
+      </div>
+      <div class="hero-stats" aria-label="Placement highlights">
+        <div class="stat-card">
+          <span class="stat-label">Companies tracked</span>
+          <strong id="companyCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Branches covered</span>
+          <strong id="branchCount">0</strong>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <section class="panel panel-student" aria-labelledby="studentCheckerTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="section-tag">Student checker</p>
+            <h2 id="studentCheckerTitle">Find eligible companies</h2>
+          </div>
+          <p class="panel-intro">Enter academic details to see which companies match the current placement rules.</p>
+        </div>
+
+        <form id="eligibilityForm" class="form-grid">
+          <label class="field">
+            <span>Student name</span>
+            <input type="text" id="studentName" placeholder="Enter full name" required>
+          </label>
+          <label class="field">
+            <span>Register number</span>
+            <input type="text" id="registerNumber" placeholder="Enter register number" required>
+          </label>
+          <label class="field">
+            <span>Resume link</span>
+            <input type="url" id="resumeLink" placeholder="https://example.com/resume" required>
+          </label>
+          <label class="field">
+            <span>CGPA</span>
+            <input type="number" id="cgpa" min="0" max="10" step="0.01" placeholder="e.g. 7.85" required>
+          </label>
+          <label class="field">
+            <span>Branch</span>
+            <select id="branch" required>
+              <option value="">Select branch</option>
+              <option value="CSE">CSE</option>
+              <option value="IT">IT</option>
+              <option value="ECE">ECE</option>
+              <option value="EEE">EEE</option>
+              <option value="MECH">MECH</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Current arrears</span>
+            <input type="number" id="arrears" min="0" step="1" placeholder="0" required>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Check eligibility</button>
+            <button type="button" id="resetEligibility" class="btn btn-secondary">Reset</button>
+          </div>
+        </form>
+
+        <div id="eligibilityMessage" class="status-message" aria-live="polite"></div>
+        <div id="eligibilityResults" class="result-list" aria-live="polite"></div>
+      </section>
+
+      <section class="panel panel-companies" aria-labelledby="companyListTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="section-tag">Company directory</p>
+            <h2 id="companyListTitle">Current hiring criteria</h2>
+          </div>
+          <p class="panel-intro">This list powers the student checker and updates instantly when admin edits are saved.</p>
+        </div>
+
+        <div id="companyFeedback" class="status-message" aria-live="polite"></div>
+        <div id="companyEmptyState" class="empty-state" hidden>
+          <h3>No companies available</h3>
+          <p>Add a company in the management section to get started.</p>
+        </div>
+        <div id="companies" class="company-grid"></div>
+      </section>
+
+      <section class="panel panel-admin" aria-labelledby="adminPanelTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="section-tag">Placement cell management</p>
+            <h2 id="adminPanelTitle">Add or update company rules</h2>
+          </div>
+          <p class="panel-intro">Maintain company criteria through the UI. Changes are saved to the backend data store.</p>
+        </div>
+
+        <form id="companyForm" class="form-grid">
+          <input type="hidden" id="companyId">
+          <label class="field">
+            <span>Company name</span>
+            <input type="text" id="companyName" placeholder="e.g. Infosys" required>
+          </label>
+          <label class="field">
+            <span>Role / title</span>
+            <input type="text" id="companyRole" placeholder="e.g. Systems Engineer" required>
+          </label>
+          <label class="field">
+            <span>Minimum CGPA</span>
+            <input type="number" id="companyCgpa" min="0" max="10" step="0.01" placeholder="6.5" required>
+          </label>
+          <label class="field">
+            <span>Allowed branch</span>
+            <select id="companyBranch" required>
+              <option value="">Select branch</option>
+              <option value="CSE">CSE</option>
+              <option value="IT">IT</option>
+              <option value="ECE">ECE</option>
+              <option value="EEE">EEE</option>
+              <option value="MECH">MECH</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Maximum arrears allowed</span>
+            <input type="number" id="companyArrears" min="0" step="1" placeholder="0" required>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="saveCompanyBtn">Save company</button>
+            <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancel edit</button>
+          </div>
+        </form>
+
+        <div id="adminFeedback" class="status-message" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
